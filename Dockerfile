@@ -65,6 +65,10 @@ ENV DISPLAY_ERRORS="Off"
 
 # Copy our application
 COPY . /var/www/html/
+
+# Change files owner to apache
+RUN chown -R www-data:www-data /var/www/html
+
 # Copy the downloaded dependencies from the builder-prod stage.
 COPY --from=builder-prod /app/vendor /var/www/html/vendor
 
