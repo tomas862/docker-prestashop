@@ -5,12 +5,12 @@ ARG PHP_VERSION=7.1.30
 # Use this image as the base image for dev and prod.
 FROM php:${PHP_VERSION}-apache as common
 
-RUN apt-get update && apt-get install -y zlib1g-dev libicu-dev g++ && apt-get install -y libpng-dev
+RUN apt-get update && apt-get install -y zlib1g-dev libicu-dev g++ libpng-dev build-essential libssl-dev libjpeg-dev libfreetype6-dev
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
-
-RUN docker-php-ext-install mysqli && docker-php-ext-install zip && docker-php-ext-install gd
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install mysqli zip pdo pdo_mysql
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd
 
 RUN a2enmod rewrite
 
