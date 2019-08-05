@@ -1,5 +1,3 @@
-# todo: https://laravel-news.com/php-opcache-docker consider for development maybe?
-# todo: gd lib breaks https://stackoverflow.com/questions/13338339/imagecreatefromjpeg-and-similar-functions-are-not-working-in-php. Attempted to call function "imagecreatefromjpeg" from the global namespace
 ARG PHP_VERSION=7.1.30
 
 # Use this image as the base image for dev and prod.
