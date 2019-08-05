@@ -22,8 +22,11 @@ RUN echo "opcache.max_accelerated_files = 20000" >> /usr/local/etc/php/conf.d/do
 FROM common as dev
 
 RUN apt-get install -y zip unzip git; \
-    pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini;
+    pecl install xdebug && docker-php-ext-enable xdebug \
+    && echo 'zend_extension="/usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so"' >> /usr/local/etc/php/php.ini \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.idekey=PHPSTORM" >> /usr/local/etc/php/conf.d/xdebug.ini;
 
 # Copy composer binary from official Composer image.
 COPY --from=composer /usr/bin/composer /usr/bin/composer

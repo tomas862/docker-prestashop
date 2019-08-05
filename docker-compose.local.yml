@@ -5,7 +5,7 @@ services:
     build:
       target: dev
     environment:
-      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000 remote_enable=1
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9000
     volumes:
       - './PrestaShop:/var/www/html/'
 
