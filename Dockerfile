@@ -19,7 +19,6 @@ RUN docker-php-ext-install opcache
 RUN docker-php-ext-enable opcache
 RUN echo "opcache.max_accelerated_files = 20000" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
-
 # This is the image using in development.
 FROM common as dev
 
@@ -34,7 +33,6 @@ WORKDIR /var/www/html
 
 # We enable the errors only in development.
 ENV DISPLAY_ERRORS="On"
-
 
 # In this image we will download the dependencies, but without the development dependencies.
 # The dependencies are installed in the vendor folder that will be copied later into the prod image.
@@ -55,8 +53,6 @@ RUN composer install  \
 COPY . /app
 RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
 
-
-
 # This is the image that will be deployed on production.
 FROM common as prod
 
@@ -71,6 +67,3 @@ RUN chown -R www-data:www-data /var/www/html
 
 # Copy the downloaded dependencies from the builder-prod stage.
 COPY --from=builder-prod /app/vendor /var/www/html/vendor
-
-
-
